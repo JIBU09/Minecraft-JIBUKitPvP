@@ -1,0 +1,41 @@
+name: JIBUKitPvP
+version: '${project.version}'
+main: de.jibu.jibukitpvp.Main
+api-version: 1.16
+authors: [ JIBU09 ]
+description: Ka was hier rein soll
+load: STARTUP
+
+commands:
+  sethearts:
+    permission: kitpvp.sethealth
+    permission-message: §cDu hast keine Rechte dazu!
+    description: Setzte die Herzen eines Spieler
+  withdraw:
+  reset:
+    permission: kitpvp.reset
+    permission-message: §cDu hast keine Rechte dazu!
+  kit:
+    description: Wähle ein Kit aus
+  heal:
+    description: Heile dich!
+  build:
+    description: Wechlse in den Builder-Mode
+    permission: kitpvp.builder
+    permission-message: §cDu hast keine Rechte dazu!
+  gethoney:
+    description: Zeige dir dein Honey Count an!
+  sethoney:
+    description: Setze den Honey Amount eines Spielers!
+    permission: kitpvp.honey
+    permission-message: §cDu hast keine Rechte dazu!
+  addhoney:
+    description: Eröhe den Honey Amount eines Spielers!
+    permission: kitpvp.honey
+    permission-message: §cDu hast keine Rechte dazu!
+  removehoney:
+    description: Verringere den Honey Amount eines Spielers!
+    permission: kitpvp.honey
+    permission-message: §cDu hast keine Rechte dazu!
+  doly:
+    description: Führe Doly functions aus!
