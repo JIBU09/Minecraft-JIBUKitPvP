@@ -2,25 +2,19 @@ package de.jibu.jibukitpvp.DefaultFunctions;
 
 import de.jibu.jibukitpvp.Utilities.DolyConfig;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.file.*;
-import java.nio.file.attribute.FileAttribute;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 public class DolyCommand implements CommandExecutor, TabCompleter {
 
@@ -55,13 +49,19 @@ public class DolyCommand implements CommandExecutor, TabCompleter {
                         player.sendMessage("§cDoly is not installed.");
                     }
                 } else if (args[0].equalsIgnoreCase("join") && player.isOp()) {
+                    DolyConfig dolyConfig = new DolyConfig();
                     try {
-                        dolyJoin();
-                        player.sendMessage("§aLetting Doly join");
-                        player.sendMessage("§eOnly the server host can execute that command.");
+                        if (dolyConfig.isInstalled()) {
+                            dolyJoin();
+                            player.sendMessage("§aLetting Doly join!");
+                        } else {
+                            player.sendMessage("§cDoly is not installed!");
+                        }
                     } catch (IOException | InterruptedException e) {
                         throw new RuntimeException(e);
                     }
+                } else if (args[0].equalsIgnoreCase("reinstall") && player.isOp()) {
+                    player.sendMessage("§cPlease type: /doly reinstall confirm");
                 }
             } else if (args.length == 3) {
                 if (args[0].equalsIgnoreCase("fight")) {
@@ -97,10 +97,18 @@ public class DolyCommand implements CommandExecutor, TabCompleter {
                         DolyConfig dolyConfig = new DolyConfig();
                         if (dolyConfig.isInstalled()) {
                             player.sendMessage("§aUninstalling Doly Bot.");
-                            dolyUnsinstall();
                         } else {
                             player.sendMessage("§cDoly is not installed.");
                         }
+                    }
+                } else if (args[0].equalsIgnoreCase("reinstall") && player.isOp()) {
+                    if (args[1].equalsIgnoreCase("confirm")) {
+                        DolyConfig dolyConfig = new DolyConfig();
+                        player.sendMessage("§aReinstalling Doly Bot.");
+                        player.sendMessage("§eThis may take some time!");
+                        dolyUnsinstall();
+                        dolyConfig.isInstalled(true);
+                        downloadFromGitHub();
                     }
                 }
             }
@@ -121,7 +129,6 @@ public class DolyCommand implements CommandExecutor, TabCompleter {
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
         }
-        //Minecraft Plugin I made to learn pvp and play with friends. It has a build in PVP Bot which can be installed ingame. Although it isn't finished.
         try {
             FileWriter writer = new FileWriter(batchFileName);
             writer.write("@echo off\n" +
@@ -170,26 +177,26 @@ public class DolyCommand implements CommandExecutor, TabCompleter {
     public static void dolyUnsinstall() {
         try {
             List<String> commands = new ArrayList<>();
-            commands.add("powershell.exe");  // Startet PowerShell
-            commands.add("-Command");  // Gibt an, dass es sich um PowerShell-Befehle handelt
-            // Der gewünschte PowerShell-Befehl
+            commands.add("powershell.exe");
+            commands.add("-Command");
+
             commands.add("Remove-Item 'plugins//JIBUKitPvP//Doly' -Recurse -Force");
 
             ProcessBuilder processBuilder = new ProcessBuilder(commands);
-            processBuilder.redirectErrorStream(true);  // Leitet die Fehlerausgabe zum gleichen Stream wie die Standardausgabe um
+            processBuilder.redirectErrorStream(true);
 
-            Process process = processBuilder.start();  // Startet den Prozess
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));  // Liest die Ausgabe
+            Process process = processBuilder.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
-            while ((line = reader.readLine()) != null) {  // Gibt die Ausgabe in der Konsole aus
+            while ((line = reader.readLine()) != null) {
                 System.out.println(line);
             }
 
-            int exitCode = process.waitFor();  // Wartet auf das Ende des Prozesses
-            System.out.println("Exit Code: " + exitCode);  // Zeigt den Exit-Code an
+            int exitCode = process.waitFor();
+            System.out.println("Exit Code: " + exitCode);
 
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();  // Handhabt Ausnahmen
+            e.printStackTrace();
         }
     }
 
@@ -198,13 +205,6 @@ public class DolyCommand implements CommandExecutor, TabCompleter {
         Desktop desktop = Desktop.getDesktop();
         desktop.open(new File(batchFileName));
 
-    }
-
-
-    public static void quickUnzipper() throws IOException {
-        String batchFileName = "plugins//JIBUKitPvP//Doly//Minecraft-PVP-Bot-main//DolyQuickUnzipper.bat";
-        Desktop desktop = Desktop.getDesktop();
-        desktop.open(new File(batchFileName));
     }
 
 
@@ -222,6 +222,7 @@ public class DolyCommand implements CommandExecutor, TabCompleter {
             if (sender.isOp()) {
                 list.add("install");
                 list.add("uninstall");
+                list.add("reinstall");
                 list.add("join");
             }
 

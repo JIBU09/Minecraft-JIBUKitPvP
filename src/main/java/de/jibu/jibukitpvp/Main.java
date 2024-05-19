@@ -56,8 +56,6 @@ public final class Main extends JavaPlugin {
         this.getCommand("addhoney").setExecutor(new AddHoneyCommand());
         this.getCommand("removehoney").setExecutor(new RemoveHoneyCommand());
         this.getCommand("doly").setExecutor(new DolyCommand());
-        //this.getCommand("doly").setExecutor(new SummonDolyCommand());
-
         // TODO: Edit CrystalBotKit
         //SUS Seed: 7363601127887533281
 
