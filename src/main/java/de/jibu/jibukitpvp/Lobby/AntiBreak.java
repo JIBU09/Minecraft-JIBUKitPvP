@@ -15,7 +15,7 @@ public class AntiBreak implements Listener {
     public void onBlockBreak(BlockBreakEvent event) {
         Player p = event.getPlayer();
         if (event.getPlayer().getWorld() == Bukkit.getWorld("world")) {
-            if (!p.getScoreboardTags().contains("Builder") & p.getGameMode() == GameMode.SURVIVAL) {
+            if (!p.getScoreboardTags().contains("Builder")) {
                 event.setCancelled(true);
             }
         }
@@ -25,7 +25,7 @@ public class AntiBreak implements Listener {
     public void onBlockPlace(BlockPlaceEvent event) {
         Player p = event.getPlayer();
         if (event.getPlayer().getWorld() == Bukkit.getWorld("world")) {
-            if (!p.getScoreboardTags().contains("Builder") & p.getGameMode() == GameMode.SURVIVAL) {
+            if (!p.getScoreboardTags().contains("Builder")) {
                 event.setCancelled(true);
             }
         }

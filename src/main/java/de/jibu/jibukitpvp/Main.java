@@ -4,13 +4,12 @@ import de.jibu.jibukitpvp.DefaultFunctions.*;
 import de.jibu.jibukitpvp.DefaultFunctions.Kits.OPBotKit;
 import de.jibu.jibukitpvp.DefaultFunctions.Kits.PotionBotKit;
 import de.jibu.jibukitpvp.DefaultFunctions.Kits.ShieldBotKit;
-import de.jibu.jibukitpvp.HoneyClicker.*;
-import de.jibu.jibukitpvp.KitPvP.CreateWorldCommand;
+import de.jibu.jibukitpvp.LobbyMiniGames.*;
 import de.jibu.jibukitpvp.KitPvP.KitCommand;
 import de.jibu.jibukitpvp.Lobby.AntiBreak;
 import de.jibu.jibukitpvp.Lobby.WarpSign;
 import de.jibu.jibukitpvp.KitPvP.WorldReset;
-import de.jibu.jibukitpvp.Lobby.DropperFunction;
+import de.jibu.jibukitpvp.LobbyMiniGames.DropperFunction;
 import de.jibu.jibukitpvp.Lobby.WorldManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
@@ -29,6 +28,8 @@ public final class Main extends JavaPlugin {
     public void onEnable() {
         plugin = this;
 
+        new HoneySoupSystem(this).start();
+
         PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(new LifeStealFunction(), this);
         pm.registerEvents(new ItemFunctions(), this);
@@ -44,6 +45,7 @@ public final class Main extends JavaPlugin {
         pm.registerEvents(new WorldManager(), this);
         pm.registerEvents(new HoneyClicker(), this);
         pm.registerEvents(new HoneyAreaResistance(), this);
+        pm.registerEvents(new HoneySoupSystem(this), this);
         this.getCommand("sethearts").setExecutor(new SetHealthCommand());
         this.getCommand("withdraw").setExecutor(new WithDraw());
         this.getCommand("reset").setExecutor(new WorldReset());
@@ -56,6 +58,7 @@ public final class Main extends JavaPlugin {
         this.getCommand("addhoney").setExecutor(new AddHoneyCommand());
         this.getCommand("removehoney").setExecutor(new RemoveHoneyCommand());
         this.getCommand("doly").setExecutor(new DolyCommand());
+        this.getCommand("deathtrap").setExecutor(new DeathTrapCommand());
         // TODO: Edit CrystalBotKit
         //SUS Seed: 7363601127887533281
 

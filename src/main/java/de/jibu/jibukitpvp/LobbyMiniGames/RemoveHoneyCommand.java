@@ -1,4 +1,4 @@
-package de.jibu.jibukitpvp.HoneyClicker;
+package de.jibu.jibukitpvp.LobbyMiniGames;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

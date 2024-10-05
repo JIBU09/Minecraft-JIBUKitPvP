@@ -1,6 +1,8 @@
-package de.jibu.jibukitpvp.Lobby;
+package de.jibu.jibukitpvp.LobbyMiniGames;
 
 import de.jibu.jibukitpvp.DefaultFunctions.ItemBuilder;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -26,6 +28,14 @@ public class DropperFunction implements Listener {
                 p.getWorld().playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1 , 0.5f);
                 p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 40 ,255, true, false, false));
                 p.addPotionEffect(new PotionEffect(PotionEffectType.SATURATION, 40 ,255, true, false, false));
+                HoneyClickerConfig honeyClickerConfig = new HoneyClickerConfig(event.getPlayer().getUniqueId());
+                honeyClickerConfig.setHoneyCount(event.getPlayer().getLevel() + honeyClickerConfig.getHoneyCount());
+
+                StringBuilder actionBarText = new StringBuilder("§e");
+                actionBarText.append("+" + event.getPlayer().getLevel() + " §6Honey §8| §7Total: §6" + honeyClickerConfig.getHoneyCount());
+                event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(actionBarText.toString()));
+
+
                 if (p.getMaxHealth() == 1) {
                     p.setMaxHealth(2);
                     p.getWorld().playSound(p.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1 , 2f);

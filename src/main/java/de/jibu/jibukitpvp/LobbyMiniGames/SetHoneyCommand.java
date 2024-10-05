@@ -1,4 +1,4 @@
-package de.jibu.jibukitpvp.HoneyClicker;
+package de.jibu.jibukitpvp.LobbyMiniGames;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class AddHoneyCommand implements CommandExecutor {
+public class SetHoneyCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
@@ -17,10 +17,10 @@ public class AddHoneyCommand implements CommandExecutor {
                 Player target = Bukkit.getPlayer(args[0]);
                 int honey = Integer.parseInt(args[1]);
                 HoneyClickerConfig honeyClickerConfig = new HoneyClickerConfig(target.getUniqueId());
-                honeyClickerConfig.setHoneyCount(honeyClickerConfig.getHoneyCount() + honey);
+                honeyClickerConfig.setHoneyCount(honey);
                 player.sendMessage("§a" + target.getDisplayName() + " now has " + honeyClickerConfig.getHoneyCount() + " honey.");
             } else {
-                player.sendMessage("§cUse: /removehoney <Player>");
+                player.sendMessage("§cUse: /sethoney <Player>");
             }
         } else {
             sender.sendMessage("§cYou have to be a player!");
@@ -29,3 +29,4 @@ public class AddHoneyCommand implements CommandExecutor {
     }
 
 }
+

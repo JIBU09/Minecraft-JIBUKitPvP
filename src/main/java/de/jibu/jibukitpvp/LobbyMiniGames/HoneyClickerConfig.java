@@ -1,4 +1,4 @@
-package de.jibu.jibukitpvp.HoneyClicker;
+package de.jibu.jibukitpvp.LobbyMiniGames;
 
 import de.jibu.jibukitpvp.Utilities.FileWriter;
 
@@ -27,6 +27,15 @@ public class HoneyClickerConfig {
     public void removeHoneyCount() {
         fileWriter.setValue("Amount", getHoneyCount() - 1);
         fileWriter.save();
+    }
+
+    public void setBoughtSoup(boolean hasBoughtSoup) {
+        fileWriter.setValue("hasBoughtSoup", hasBoughtSoup);
+        fileWriter.save();
+    }
+
+    public boolean hasBoughtSoup() {
+        return fileWriter.getBoolean("hasBoughtSoup");
     }
 
 

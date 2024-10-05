@@ -39,3 +39,5 @@ commands:
     permission-message: §cDu hast keine Rechte dazu!
   doly:
     description: Führe Doly functions aus!
+  deathtrap:
+    permission: kitpvp.trap
